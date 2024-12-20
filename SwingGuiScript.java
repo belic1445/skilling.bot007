@@ -1,6 +1,3 @@
-DreamBotScripts/
-  ├── src/
-      ├── SwingGuiScript.java
 import org.dreambot.api.script.AbstractScript;
 import org.dreambot.api.script.ScriptManifest;
 import org.dreambot.api.methods.input.Keyboard;
