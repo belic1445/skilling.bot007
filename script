@@ -1,0 +1,176 @@
+/*
+MainScript.java
+This file acts as the entry point for the DreamBot script and handles initialization.
+*/
+
+package main;
+
+import org.dreambot.api.script.AbstractScript;
+import org.dreambot.api.script.Category;
+import org.dreambot.api.script.ScriptManifest;
+import skills.*;
+
+@ScriptManifest(name = "EliteSkillBot", author = "Nicholas", version = 1.0, description = "Advanced Bot for All Skills", category = Category.MISC)
+public class MainScript extends AbstractScript {
+
+    private AbstractScript currentSkill;
+
+    @Override
+    public void onStart() {
+        log("EliteSkillBot initialized. Please select a skill to train.");
+    }
+
+    @Override
+    public int onLoop() {
+        if (currentSkill == null) {
+            currentSkill = new Woodcutting(); // Default to Woodcutting
+            currentSkill.onStart();
+        }
+
+        return currentSkill.onLoop();
+    }
+
+    @Override
+    public void onExit() {
+        if (currentSkill != null) {
+            currentSkill.onExit();
+        }
+    }
+}
+
+/*
+Woodcutting.java
+Handles woodcutting functionality.
+*/
+
+package skills;
+
+import org.dreambot.api.script.AbstractScript;
+
+public class Woodcutting extends AbstractScript {
+    @Override
+    public void onStart() {
+        log("Starting Woodcutting...");
+    }
+
+    @Override
+    public int onLoop() {
+        // Woodcutting logic here
+        log("Chopping trees...");
+        return 1000;
+    }
+
+    @Override
+    public void onExit() {
+        log("Woodcutting finished.");
+    }
+}
+
+/*
+Fishing.java
+Handles fishing functionality.
+*/
+
+package skills;
+
+import org.dreambot.api.script.AbstractScript;
+
+public class Fishing extends AbstractScript {
+    @Override
+    public void onStart() {
+        log("Starting Fishing...");
+    }
+
+    @Override
+    public int onLoop() {
+        // Fishing logic here
+        log("Catching fish...");
+        return 1000;
+    }
+
+    @Override
+    public void onExit() {
+        log("Fishing finished.");
+    }
+}
+
+/*
+Mining.java
+Handles mining functionality.
+*/
+
+package skills;
+
+import org.dreambot.api.script.AbstractScript;
+
+public class Mining extends AbstractScript {
+    @Override
+    public void onStart() {
+        log("Starting Mining...");
+    }
+
+    @Override
+    public int onLoop() {
+        // Mining logic here
+        log("Mining ores...");
+        return 1000;
+    }
+
+    @Override
+    public void onExit() {
+        log("Mining finished.");
+    }
+}
+
+/*
+Combat.java
+Handles combat functionality.
+*/
+
+package skills;
+
+import org.dreambot.api.script.AbstractScript;
+
+public class Combat extends AbstractScript {
+    @Override
+    public void onStart() {
+        log("Starting Combat...");
+    }
+
+    @Override
+    public int onLoop() {
+        // Combat logic here
+        log("Fighting NPCs...");
+        return 1000;
+    }
+
+    @Override
+    public void onExit() {
+        log("Combat finished.");
+    }
+}
+
+/*
+Config.java
+Handles configuration details for the bot.
+*/
+
+package resources;
+
+public class Config {
+    public static final String[] SKILLS = {"Woodcutting", "Fishing", "Mining", "Combat"};
+}
+
+/*
+module.json
+Describes the script module for DreamBot.
+*/
+
+{
+    "name": "EliteSkillBot",
+    "author": "bands",
+    "version": "1.0",
+    "description": "An advanced bot for training all skills.",
+    "category": "Misc",
+    "main": "main.MainScript"
+}
