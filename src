@@ -1,0 +1,10 @@
+src/
+├── MainScript.java
+├── skills/
+    ├── Woodcutting.java
+    ├── Fishing.java
+    ├── Mining.java
+    ├── Combat.java
+└── resources/
+    └── Config.java
+module.json
