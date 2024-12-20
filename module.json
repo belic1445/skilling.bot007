@@ -1,0 +1,8 @@
+{
+    "name": "EliteSkillBot",
+    "author": "bands",
+    "version": "1.0",
+    "description": "An advanced bot for training all skills.",
+    "category": "Misc",
+    "main": "MainScript"
+}
