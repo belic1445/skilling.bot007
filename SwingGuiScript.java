@@ -1,64 +1,63 @@
+DreamBotScripts/
+  ├── src/
+      ├── SwingGuiScript.java
 import org.dreambot.api.script.AbstractScript;
 import org.dreambot.api.script.ScriptManifest;
-import org.dreambot.api.wrappers.interactive.GameObject;
+import org.dreambot.api.methods.input.Keyboard;
+import org.dreambot.api.methods.input.Mouse;
+import org.dreambot.api.methods.container.impl.Inventory;
+import org.dreambot.api.utilities.Timer;
+import org.dreambot.api.methods.tabs.Tab;
 import javax.swing.*;
 import java.awt.*;
-import javax.swing.SwingUtilities;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-@ScriptManifest(name = "Swing GUI Example", description = "An example script with improved GUI handling", author = "YourName", version = 1.0)
+@ScriptManifest(name = "Swing GUI Script", author = "YourName", version = 1.0)
 public class SwingGuiScript extends AbstractScript {
 
-    private MyGUI gui;
-
+    private JFrame frame;
+    private JButton startButton;
+    private JTextField textField;
+    
     @Override
     public void onStart() {
-        // Initialize GUI on the EDT to ensure thread safety
         SwingUtilities.invokeLater(() -> {
-            gui = new MyGUI();
-            gui.setVisible(true); // Make GUI visible on the EDT
+            frame = new JFrame("Swing GUI Example");
+            frame.setSize(300, 200);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+            textField = new JTextField("Hello, DreamBot!");
+            textField.setBounds(50, 50, 200, 30);
+
+            startButton = new JButton("Start");
+            startButton.setBounds(50, 100, 200, 30);
+            startButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // Action when the button is pressed
+                    log("Start button pressed!");
+                }
+            });
+
+            frame.setLayout(null);
+            frame.add(textField);
+            frame.add(startButton);
+            frame.setVisible(true);
         });
     }
 
     @Override
     public int onLoop() {
-        // Example game logic goes here
-        // Do not call Swing methods directly from this loop; keep game logic separate from GUI logic
-
-        // If you need to update the GUI based on the game state, use invokeLater
-        SwingUtilities.invokeLater(() -> {
-            if (gui != null) {
-                gui.updateStatus("Game is running");
-            }
-        });
-
-        return 1000; // Sleep time between loops
+        // Your loop code here, for example:
+        if (Inventory.contains("Item")) {
+            log("Item found in inventory");
+        }
+        return 500;  // Adjust the sleep time for the script's loop
     }
 
     @Override
     public void onExit() {
-        // Optionally close the GUI when the script exits
-        if (gui != null) {
-            SwingUtilities.invokeLater(() -> gui.setVisible(false)); // Hide GUI safely
-        }
-    }
-
-    // Custom GUI class
-    public class MyGUI extends JFrame {
-        private JLabel statusLabel;
-
-        public MyGUI() {
-            setTitle("Swing GUI Example");
-            setSize(300, 200);
-            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            setLayout(new FlowLayout());
-
-            statusLabel = new JLabel("Waiting for game...");
-            add(statusLabel);
-        }
-
-        // Update the status text safely on the EDT
-        public void updateStatus(String status) {
-            SwingUtilities.invokeLater(() -> statusLabel.setText(status));
-        }
+        log("Script has exited.");
     }
 }
